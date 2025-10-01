@@ -1,0 +1,27 @@
+////TRAJECTORY_MODEL.CPP
+#include "../include/trajectory_model.h"
+#include <fstream>
+#include <sstream>
+#include <iostream>
+
+std::vector<TrajectoryObservation> LoadTrajectoryData(const std::string& filename) {
+    std::vector<TrajectoryObservation> data;
+    std::ifstream infile(filename);
+    if (!infile) {
+        std::cerr << "Failed to open file: " << filename << std::endl;
+        return data;
+    }
+    std::string line;
+    while (std::getline(infile, line)) {
+        std::istringstream iss(line);
+        double t, x, y;
+        if (!(iss >> t >> x >> y)) continue;
+        data.push_back({t, x, y});
+    }
+    return data;
+}
+//RESLUT
+Estimated v0: 100.567 px/s
+Estimated g: 160.026 px/s^2
+Estimated k: 1.13232 1/s
+RMSE (per-component): 0.0106115
